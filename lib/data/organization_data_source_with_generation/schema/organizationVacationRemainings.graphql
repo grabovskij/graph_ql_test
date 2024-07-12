@@ -1,0 +1,20 @@
+query GetOrganizationVacationRemainings($companyId:UUID!, $employeeIds:[UUID!]!) {
+    organizationVacationRemainings(
+        companyId: $companyId,
+        employeeIds: $employeeIds,
+    ) {
+        edges {
+            node {
+                companyId
+                employeeId
+                date
+                number
+            }
+        }
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+        }
+        totalCount
+    }
+}
