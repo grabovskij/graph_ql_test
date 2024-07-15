@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graph_ql_test/data/organization_data_source_with_generation/organization_data_source.dart';
-
-import 'data/organization_data_source/organization_data_source.dart';
+import 'package:graph_ql_test/data/organization_data_source/organization_data_source.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,16 +34,13 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   final OrganisationDataSource source = OrganisationDataSource();
-  final OrganisationDataSourceWithGeneration sourceGeneration =
-      OrganisationDataSourceWithGeneration();
 
   Future<void> _incrementCounter() async {
     setState(() {
       _counter++;
     });
 
-    source.getPostData();
-    // sourceGeneration.getGeneratedDataGraphQL();
+    source.getData();
   }
 
   @override

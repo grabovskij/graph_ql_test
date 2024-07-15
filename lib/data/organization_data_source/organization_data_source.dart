@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -10,23 +11,26 @@ class OrganisationDataSource {
   static const _accessToken = 'd6eb29f9-5322-4901-8a68-a8bcac58b45c';
   static const _url = 'https://dev.graphql.zenden.cloud/graphql';
 
-  final Dio _dio = Dio(BaseOptions(
-    baseUrl: _url,
-    headers: {'x-api-key': _accessToken},
-  ));
+  final Dio _dio = Dio(
+    BaseOptions(
+      headers: {'x-api-key': _accessToken},
+    ),
+  );
 
-  /// Вариант работы только с dio
-  Future<void> getPostData() async {
+  Future<void> getData() async {
+    const companyId = '6837071c-24ce-11e2-9920-000423cce492';
+    const employeeIds = [
+      '2604d3e7-3fe5-11e9-80ce-0050569c84d8',
+      '95eb9d8d-9e3d-11ee-b805-0050569cd4da',
+      'c6599073-23e4-11e5-8e93-000c298b1ba7',
+    ];
+
     _dio.post(
       _url,
       data: {
         'query': organizationVacationRemainings(
-          companyId: '6837071c-24ce-11e2-9920-000423cce492',
-          employeeIds: [
-            '2604d3e7-3fe5-11e9-80ce-0050569c84d8',
-            '95eb9d8d-9e3d-11ee-b805-0050569cd4da',
-            'c6599073-23e4-11e5-8e93-000c298b1ba7',
-          ],
+          companyId: companyId,
+          employeeIds: employeeIds,
         )
       },
     ).then(
@@ -36,7 +40,7 @@ class OrganisationDataSource {
         log(nodes.toString());
       },
       onError: (error, stackTrace) => log(
-        'Error',
+        'Error:',
         error: error,
         stackTrace: stackTrace,
       ),
