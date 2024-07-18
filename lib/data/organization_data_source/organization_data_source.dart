@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -11,11 +10,15 @@ class OrganisationDataSource {
   static const _accessToken = 'd6eb29f9-5322-4901-8a68-a8bcac58b45c';
   static const _url = 'https://dev.graphql.zenden.cloud/graphql';
 
-  final Dio _dio = Dio(
-    BaseOptions(
+  OrganisationDataSource(this._dio);
+
+  Options get options {
+    return Options(
       headers: {'x-api-key': _accessToken},
-    ),
-  );
+    );
+  }
+
+  final Dio _dio;
 
   Future<void> getData() async {
     const companyId = '6837071c-24ce-11e2-9920-000423cce492';
@@ -27,6 +30,7 @@ class OrganisationDataSource {
 
     _dio.post(
       _url,
+      options: options,
       data: {
         'query': organizationVacationRemainings(
           companyId: companyId,

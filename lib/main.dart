@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:graph_ql_test/data/organization_data_source/inventory_data_source.dart';
 import 'package:graph_ql_test/data/organization_data_source/organization_data_source.dart';
 
 void main() {
@@ -33,14 +35,25 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  final OrganisationDataSource source = OrganisationDataSource();
+  late final Dio dio;
+  late final OrganisationDataSource source;
+  late final InventoryDataSource inventorySource;
+
+  @override
+  void initState() {
+    super.initState();
+
+    dio = Dio();
+    source = OrganisationDataSource(dio);
+    inventorySource = InventoryDataSource(dio);
+  }
 
   Future<void> _incrementCounter() async {
     setState(() {
       _counter++;
     });
 
-    source.getData();
+    inventorySource.getData();
   }
 
   @override
